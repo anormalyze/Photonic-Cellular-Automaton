@@ -1,2 +1,3 @@
 - https://claude.site/artifacts/3b09f7bb-e62b-4887-a11a-cda8675ba2ea
 - v0.1 https://claude.site/artifacts/a889c42c-315d-41aa-8547-6fcd635a07b5
+- Debugging https://claude.site/artifacts/ba62ca41-5e03-4b5f-b513-612e849ec693
