@@ -1,20 +1,31 @@
-name: Jekyll site CI
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ☼/☾ | ■~□ | ↑↓→ | ◊/◊ | ☼/☾ | ■~□ | ↑↓→ | ◊/◊ |
+|  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ■~□ | ☼/☾ | ◊/◊ | ↑↓→ | ■~□ | ☼/☾ | ◊/◊ | ↑↓→ |
+|  I  |  J  |  K  |  L  |  M  |  N  |  O  |  P  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ↑↓→ | ◊/◊ | ☼/☾ | ■~□ | ↑↓→ | ◊/◊ | ☼/☾ | ■~□ |
+|  Q  |  R  |  S  |  T  |  U  |  V  |  W  |  X  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ◊/◊ | ↑↓→ | ■~□ | ☼/☾ | ◊/◊ | ↑↓→ | ■~□ | ☼/☾ |
+|  Y  |  Z  |  1  |  2  |  3  |  4  |  5  |  6  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ☼/☾ | ■~□ | ↑↓→ | ◊/◊ | ☼/☾ | ■~□ | ↑↓→ | ◊/◊ |
+|  7  |  8  |  9  |  0  |  !  |  @  |  #  |  $  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ■~□ | ☼/☾ | ◊/◊ | ↑↓→ | ■~□ | ☼/☾ | ◊/◊ | ↑↓→ |
+|  %  |  ^  |  &  |  *  |  (  |  )  |  _  |  +  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ↑↓→ | ◊/◊ | ☼/☾ | ■~□ | ↑↓→ | ◊/◊ | ☼/☾ | ■~□ |
+|  -  |  =  |  [  |  ]  |  {  |  }  |  |  |  \  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ◊/◊ | ↑↓→ | ■~□ | ☼/☾ | ◊/◊ | ↑↓→ | ■~□ | ☼/☾ |
+|  :  |  ;  |  "  |  '  |  <  |  >  |  ?  |  /  |
++-----+-----+-----+-----+-----+-----+-----+-----+
 
-on:
-  push:
-    branches: [ "Cellular-Automaton" ]
-  pull_request:
-    branches: [ "Cellular-Automaton" ]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+Axiom Legend:
+☼/☾ - Day/Night Cycle: Represents the alternation between active and dormant states
+■~□ - Solid/Empty: Symbolizes the presence or absence of life in a cell
+↑↓→ - Movement: Indicates the potential for change or evolution in any direction
+◊/◊ - Interaction: Represents the influence of neighboring cells on each other
