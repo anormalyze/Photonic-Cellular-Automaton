@@ -1,2 +1,2 @@
 - https://claude.site/artifacts/3b09f7bb-e62b-4887-a11a-cda8675ba2ea
-- v0.1 https://github.com/anormalyze/Photonic-Cellular-Automaton
+- v0.1 https://claude.site/artifacts/a889c42c-315d-41aa-8547-6fcd635a07b5
