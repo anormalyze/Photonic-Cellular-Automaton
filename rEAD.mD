@@ -1,13 +1,54 @@
-# Photonic Cellular Automaton
+HTML Structure:
 
-```
-Photonic Cellular Automaton/
-├── README.md
-├── index.html
-├── styles.css
-├── script.js
-└── LICENSE
-```
+A grid to display the cellular automaton
+Control buttons for starting, stopping, and resetting the simulation
+An explanation section describing the axioms and their effects
+
+
+CSS Styling:
+
+A dark theme to emphasize the photonic nature of the simulation
+Responsive grid layout using CSS Grid
+Smooth transitions for cell state changes
+
+
+JavaScript Implementation:
+
+Grid Initialization: Creates a 20x20 grid of cells, each with a random initial state and axiom.
+Cell Representation: Each cell has a state (0 or 1) and an axiom (0-3).
+Axiom Implementation:
+
+☼/☾ (Day/Night Cycle): Follows rules similar to Conway's Game of Life
+■~□ (Solid/Empty): Becomes active if surrounded by many active cells
+↑↓→ (Movement): State changes based on the sum of its state and active neighbors
+◊/◊ (Interaction): Becomes active if it has exactly three active neighbors
+
+
+Simulation Loop: Applies rules and updates the grid at regular intervals
+Photonic Visualization: Uses HSL color model to represent cell states, with brighter colors for active cells
+
+
+User Interaction:
+
+Start: Begins the simulation
+Stop: Pauses the simulation
+Reset: Reinitializes the grid with random states
+
+
+Code Structure:
+
+Functions are modular and well-commented for easy understanding
+The main simulation logic is separated into applyRules and updateGrid functions
+
+
+
+To use this HTML page:
+
+Open it in a web browser
+The grid will initialize with random cell states and axioms
+Click "Start" to begin the simulation
+Observe how the cells evolve based on their axioms
+Use "Stop" to pause and "Reset" to start over with a new random configuration
 
 ## 🌟 Project Description
    └── The Photonic Cellular Automaton is an interactive web-based simulation that explores the behavior of cellular automata using photonic-inspired rules.
