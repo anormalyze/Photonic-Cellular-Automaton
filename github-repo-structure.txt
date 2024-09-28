@@ -1,0 +1,224 @@
+photonic-cellular-automaton/
+│
+├── index.html
+├── styles.css
+├── script.js
+├── README.md
+└── LICENSE
+
+# Contents of each file:
+
+# index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photonic Cellular Automaton</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Photonic Cellular Automaton</h1>
+    <div id="grid"></div>
+    <div class="controls">
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="reset">Reset</button>
+    </div>
+    <div id="explanation">
+        <h2>Axioms and Their Effects:</h2>
+        <p>☼/☾ (Day/Night Cycle): Cells alternate between active and dormant states.</p>
+        <p>■~□ (Solid/Empty): Determines the presence or absence of energy in a cell.</p>
+        <p>↑↓→ (Movement): Influences the direction of energy transfer between cells.</p>
+        <p>◊/◊ (Interaction): Governs how neighboring cells affect each other.</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+# styles.css
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(20, 20px);
+    gap: 1px;
+    background-color: #333;
+    padding: 1px;
+    margin-bottom: 20px;
+}
+
+.cell {
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    transition: all 0.3s;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+button {
+    margin: 0 10px;
+    padding: 5px 10px;
+}
+
+#explanation {
+    max-width: 600px;
+    text-align: justify;
+}
+
+# script.js
+const gridSize = 20;
+const grid = document.getElementById('grid');
+let cells = [];
+let intervalId = null;
+
+function initializeGrid() {
+    grid.innerHTML = '';
+    cells = [];
+    for (let i = 0; i < gridSize * gridSize; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        grid.appendChild(cell);
+        cells.push({
+            element: cell,
+            state: Math.random() > 0.5 ? 1 : 0,
+            axiom: Math.floor(Math.random() * 4)
+        });
+    }
+    updateGrid();
+}
+
+function updateGrid() {
+    cells.forEach(cell => {
+        const hue = cell.state * 60;
+        const lightness = 50 + cell.state * 50;
+        cell.element.style.backgroundColor = `hsl(${hue}, 100%, ${lightness}%)`;
+        cell.element.textContent = ['☼/☾', '■~□', '↑↓→', '◊/◊'][cell.axiom];
+    });
+}
+
+function applyRules() {
+    const newStates = cells.map((cell, index) => {
+        const neighbors = getNeighbors(index);
+        const activeNeighbors = neighbors.filter(n => n.state === 1).length;
+
+        switch (cell.axiom) {
+            case 0: return activeNeighbors === 2 || activeNeighbors === 3 ? 1 : 0;
+            case 1: return activeNeighbors > 4 ? 1 : 0;
+            case 2: return (cell.state + activeNeighbors) % 2;
+            case 3: return activeNeighbors === 3 ? 1 : 0;
+            default: return cell.state;
+        }
+    });
+
+    cells.forEach((cell, index) => {
+        cell.state = newStates[index];
+    });
+}
+
+function getNeighbors(index) {
+    const neighbors = [];
+    const row = Math.floor(index / gridSize);
+    const col = index % gridSize;
+
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            if (i === 0 && j === 0) continue;
+            const newRow = row + i;
+            const newCol = col + j;
+            if (newRow >= 0 && newRow < gridSize && newCol >= 0 && newCol < gridSize) {
+                neighbors.push(cells[newRow * gridSize + newCol]);
+            }
+        }
+    }
+
+    return neighbors;
+}
+
+function startSimulation() {
+    if (!intervalId) {
+        intervalId = setInterval(() => {
+            applyRules();
+            updateGrid();
+        }, 500);
+    }
+}
+
+function stopSimulation() {
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
+}
+
+document.getElementById('start').addEventListener('click', startSimulation);
+document.getElementById('stop').addEventListener('click', stopSimulation);
+document.getElementById('reset').addEventListener('click', initializeGrid);
+
+initializeGrid();
+
+# README.md
+# Photonic Cellular Automaton
+
+This project implements a cellular automaton based on photonic principles and iphotic axioms. It visualizes the interaction of cells governed by different rules inspired by light behavior.
+
+## Features
+
+- Interactive grid of cells
+- Four different axioms governing cell behavior
+- Real-time simulation of cell interactions
+- Start, stop, and reset controls
+
+## How to Use
+
+1. Clone this repository
+2. Open `index.html` in a web browser
+3. Use the buttons to control the simulation:
+   - Start: Begin the simulation
+   - Stop: Pause the simulation
+   - Reset: Reinitialize the grid with random states and axioms
+
+## Axioms
+
+- ☼/☾ (Day/Night Cycle): Cells alternate between active and dormant states
+- ■~□ (Solid/Empty): Determines the presence or absence of energy in a cell
+- ↑↓→ (Movement): Influences the direction of energy transfer between cells
+- ◊/◊ (Interaction): Governs how neighboring cells affect each other
+
+## License
+
+This project is open source and available under the MIT License.
+
+# LICENSE
+MIT License
+
+Copyright (c) [year] [fullname]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
