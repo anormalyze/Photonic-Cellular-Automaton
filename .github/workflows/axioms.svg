@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <style>
+    .cell { stroke: #333; stroke-width: 2; }
+    .axiom { font-size: 24px; cursor: pointer; }
+    .char { font-size: 18px; fill: #666; }
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+    .active { animation: pulse 2s infinite; }
+  </style>
+  
+  <rect width="100%" height="100%" fill="#f0f0f0"/>
+  
+  <g id="matrix">
+    <!-- Grid and cells will be generated here by JavaScript -->
+  </g>
+  
+  <script type="text/javascript"><![CDATA[
+    const axioms = ['☼/☾', '■~□', '↑↓→', '◊/◊'];
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*'.split('');
+    const matrix = document.getElementById('matrix');
+    let cells = [];
+
+    function createMatrix() {
+      for (let y = 0; y < 8; y++) {
+        for (let x = 0; x < 8; x++) {
+          const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          g.setAttribute('transform', `translate(${x*100},${y*100})`);
+          
+          const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          rect.setAttribute('width', '100');
+          rect.setAttribute('height', '100');
+          rect.setAttribute('class', 'cell');
+          rect.setAttribute('fill', (x+y)%2 === 0 ? '#fff' : '#eee');
+          g.appendChild(rect);
+          
+          const axiom = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          axiom.setAttribute('x', '50');
+          axiom.setAttribute('y', '40');
+          axiom.setAttribute('text-anchor', 'middle');
+          axiom.setAttribute('class', 'axiom');
+          axiom.textContent = axioms[(x+y)%4];
+          axiom.onclick = () => toggleCell(x, y);
+          g.appendChild(axiom);
+          
+          const char = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          char.setAttribute('x', '50');
+          char.setAttribute('y', '80');
+          char.setAttribute('text-anchor', 'middle');
+          char.setAttribute('class', 'char');
+          char.textContent = chars[y*8+x];
+          g.appendChild(char);
+          
+          matrix.appendChild(g);
+          cells.push({x, y, active: false, element: axiom});
+        }
+      }
+    }
+
+    function toggleCell(x, y) {
+      const cell = cells.find(c => c.x === x && c.y === y);
+      cell.active = !cell.active;
+      cell.element.classList.toggle('active');
+      updateNeighbors(x, y);
+    }
+
+    function updateNeighbors(x, y) {
+      const neighbors = [
+        {x: x-1, y: y-1}, {x: x, y: y-1}, {x: x+1, y: y-1},
+        {x: x-1, y: y}, {x: x+1, y: y},
+        {x: x-1, y: y+1}, {x: x, y: y+1}, {x: x+1, y: y+1}
+      ];
+      
+      neighbors.forEach(n => {
+        if (n.x >= 0 && n.x < 8 && n.y >= 0 && n.y < 8) {
+          const cell = cells.find(c => c.x === n.x && c.y === n.y);
+          if (Math.random() > 0.5) {
+            cell.active = !cell.active;
+            cell.element.classList.toggle('active');
+          }
+        }
+      });
+    }
+
+    createMatrix();
+  ]]></script>
+</svg>
