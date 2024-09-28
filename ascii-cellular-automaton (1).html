@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Cellular Automaton</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #000;
+            color: #0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        #grid {
+            white-space: pre;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 0 10px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ASCII Cellular Automaton</h1>
+    <div id="grid"></div>
+    <div>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="reset">Reset</button>
+    </div>
+
+    <script>
+        const gridSize = 20;
+        const grid = document.getElementById('grid');
+        let cells = [];
+        let intervalId = null;
+        const axioms = ['☼☾', '■□', '↕↔', '◊○'];
+        const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+        function initializeGrid() {
+            cells = Array(gridSize).fill().map(() => 
+                Array(gridSize).fill().map(() => ({
+                    state: Math.random() > 0.5 ? 1 : 0,
+                    axiom: Math.floor(Math.random() * 4),
+                    number: Math.floor(Math.random() * 10)
+                }))
+            );
+            updateGridDisplay();
+        }
+
+        function updateGridDisplay() {
+            let display = '';
+            for (let y = 0; y < gridSize; y++) {
+                for (let x = 0; x < gridSize; x++) {
+                    const cell = cells[y][x];
+                    const axiom = axioms[cell.axiom][cell.state];
+                    const number = numbers[cell.number];
+                    const digital = cell.state;
+                    display += `${axiom}${number}${digital}|`;
+                }
+                display += '\n';
+            }
+            grid.textContent = display;
+        }
+
+        function applyRules() {
+            const newCells = cells.map((row, y) => 
+                row.map((cell, x) => {
+                    const neighbors = getNeighbors(x, y);
+                    const activeNeighbors = neighbors.filter(n => n.state === 1).length;
+                    let newState;
+
+                    switch (cell.axiom) {
+                        case 0: // ☼☾ Day/Night Cycle
+                            newState = (activeNeighbors === 2 || activeNeighbors === 3) ? 1 : 0;
+                            break;
+                        case 1: // ■□ Solid/Empty
+                            newState = activeNeighbors > 4 ? 1 : 0;
+                            break;
+                        case 2: // ↕↔ Movement
+                            newState = (cell.state + activeNeighbors) % 2;
+                            break;
+                        case 3: // ◊○ Interaction
+                            newState = activeNeighbors === 3 ? 1 : 0;
+                            break;
+                    }
+
+                    return {
+                        ...cell,
+                        state: newState,
+                        number: (cell.number + 1) % 10
+                    };
+                })
+            );
+            cells = newCells;
+        }
+
+        function getNeighbors(x, y) {
+            const neighbors = [];
+            for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    if (dx === 0 && dy === 0) continue;
+                    const nx = (x + dx + gridSize) % gridSize;
+                    const ny = (y + dy + gridSize) % gridSize;
+                    neighbors.push(cells[ny][nx]);
+                }
+            }
+            return neighbors;
+        }
+
+        function startSimulation() {
+            if (!intervalId) {
+                intervalId = setInterval(() => {
+                    applyRules();
+                    updateGridDisplay();
+                }, 500);
+            }
+        }
+
+        function stopSimulation() {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        }
+
+        document.getElementById('start').addEventListener('click', startSimulation);
+        document.getElementById('stop').addEventListener('click', stopSimulation);
+        document.getElementById('reset').addEventListener('click', initializeGrid);
+
+        initializeGrid();
+    </script>
+</body>
+</html>
