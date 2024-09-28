@@ -26,10 +26,37 @@ This project implements a cellular automaton based on photonic principles and ip
 
 ## Axioms
 
-- ☼/☾ (Day/Night Cycle): Cells alternate between active and dormant states
-- ■~□ (Solid/Empty): Determines the presence or absence of energy in a cell
-- ↑↓→ (Movement): Influences the direction of energy transfer between cells
-- ◊/◊ (Interaction): Governs how neighboring cells affect each other
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ☼/☾ | ■~□ | ↑↓→ | ◊/◊ | ☼/☾ | ■~□ | ↑↓→ | ◊/◊ |
+|  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ■~□ | ☼/☾ | ◊/◊ | ↑↓→ | ■~□ | ☼/☾ | ◊/◊ | ↑↓→ |
+|  I  |  J  |  K  |  L  |  M  |  N  |  O  |  P  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ↑↓→ | ◊/◊ | ☼/☾ | ■~□ | ↑↓→ | ◊/◊ | ☼/☾ | ■~□ |
+|  Q  |  R  |  S  |  T  |  U  |  V  |  W  |  X  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ◊/◊ | ↑↓→ | ■~□ | ☼/☾ | ◊/◊ | ↑↓→ | ■~□ | ☼/☾ |
+|  Y  |  Z  |  1  |  2  |  3  |  4  |  5  |  6  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ☼/☾ | ■~□ | ↑↓→ | ◊/◊ | ☼/☾ | ■~□ | ↑↓→ | ◊/◊ |
+|  7  |  8  |  9  |  0  |  !  |  @  |  #  |  $  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ■~□ | ☼/☾ | ◊/◊ | ↑↓→ | ■~□ | ☼/☾ | ◊/◊ | ↑↓→ |
+|  %  |  ^  |  &  |  *  |  (  |  )  |  _  |  +  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ↑↓→ | ◊/◊ | ☼/☾ | ■~□ | ↑↓→ | ◊/◊ | ☼/☾ | ■~□ |
+|  -  |  =  |  [  |  ]  |  {  |  }  |  |  |  \  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+| ◊/◊ | ↑↓→ | ■~□ | ☼/☾ | ◊/◊ | ↑↓→ | ■~□ | ☼/☾ |
+|  :  |  ;  |  "  |  '  |  <  |  >  |  ?  |  /  |
++-----+-----+-----+-----+-----+-----+-----+-----+
+
+Axiom Legend:
+☼/☾ - Day/Night Cycle: Represents the alternation between active and dormant states
+■~□ - Solid/Empty: Symbolizes the presence or absence of life in a cell
+↑↓→ - Movement: Indicates the potential for change or evolution in any direction
+◊/◊ - Interaction: Represents the influence of neighboring cells on each other
 
 ## License
 
